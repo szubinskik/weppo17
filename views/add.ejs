@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+    <title>Dodawanie gry</title>
+    <script src="/scripts/add.js"></script>
+</head>
+<body>
+    <form method="POST" id="gameForm">
+        <table>
+            <tr>
+                <td align="right">Tytuł: </td>
+                <td><input type="text" name="title" id = "title" size="30" maxlength="100"></td>
+                <td id="titleMes"></td>
+            </tr>
+            <tr>
+                <td align="right">Cena: </td>
+                <td><input type="text" name="price" id="price"></td>
+                <td id="priceMes"></td>
+            </tr>
+            <tr>
+                <td align="right" valign="top">Opis: </td>
+                <td><textarea name="description" cols="30" rows="5"></textarea></td>
+            </tr>
+        </table>
+        <button type="submit">Dodaj</button>
+    </form>
+</body>
+</html>
