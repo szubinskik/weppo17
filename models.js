@@ -7,6 +7,8 @@ const sequelize = new Sequelize({
     dialect: "postgres"
 })
 
+module.exports.Op = Sequelize.Op
+
 module.exports.Game = sequelize.define("games", {
     id: {
         type: Sequelize.INTEGER,
@@ -23,4 +25,3 @@ module.exports.Game = sequelize.define("games", {
     },
     description: Sequelize.TEXT
 })
-
