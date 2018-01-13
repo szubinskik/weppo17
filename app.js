@@ -18,9 +18,56 @@ app.get("/add", (req, res) => {
 
 app.post("/add", (req, res) => {
     req.body.price = req.body.price.replace(",", ".") * 100
-    Game.create(req.body)
+    const game = Game.build(req.body)
+    game.save()
     .then(() => {
-        res.end("Ok")
+        res.setHeader("Content-type", "text/html; charset=utf-8")
+        res.end("Pomyślnie dodano grę.<br>Jej id to: " + game.id)
+    })
+    .catch(err => {
+        console.error(err)
+        res.end("Error")
+    })
+})
+
+app.get("/edit", (req, res) => {
+    Game.findOne({
+        where: { id: req.query.id }
+    })
+    .then(game => {
+        if(game) {
+            res.render("edit.ejs", {
+                title: game.title,
+                price: game.price / 100,
+                description: game.description
+            })
+        }
+        else {
+            res.setHeader("Content-type", "text/html; charset=utf-8")
+            res.end("Nie można odnaleźć żądanej gry")
+        }
+    })
+    .catch(err => {
+        console.error(err)
+        res.end("Error")
+    })
+})
+
+app.post("/edit", (req, res) => {
+    Game.findOne({
+        where: { id: req.query.id }
+    })
+    .then(game => {
+        if(game) {
+            req.body.price = req.body.price.replace(",", ".") * 100
+            game.update(req.body)
+            res.setHeader("Content-type", "text/html; charset=utf-8")
+            res.end("Pomyślnie zmieniono dane gry")
+        }
+        else {
+            res.setHeader("Content-type", "text/html; charset=utf-8")
+            res.end("Nie można odnaleźć żądanej gry")
+        }
     })
     .catch(err => {
         console.error(err)
