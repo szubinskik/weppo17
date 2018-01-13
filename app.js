@@ -66,11 +66,8 @@ app.get("/edit", (req, res) => {
     })
     .then(game => {
         if(game) {
-            res.render("edit.ejs", {
-                title: game.title,
-                price: game.price / 100,
-                description: game.description
-            })
+            game.price /= 100
+            res.render("edit.ejs", { game: game })
         }
         else {
             res.setHeader("Content-type", "text/html; charset=utf-8")

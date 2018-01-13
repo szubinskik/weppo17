@@ -7,9 +7,11 @@
 <body>
     <h2>Dodawanie gry</h2>
     <%- include("gameForm.ejs", {
-        title: "",
-        price: "",
-        description: ""
+        game: {
+            title: "",
+            price: "",
+            description: ""
+        }
     }) %>
 </body>
 </html>
