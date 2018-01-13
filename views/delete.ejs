@@ -1,0 +1,16 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+    <meta charset="UTF-8">
+    <title>Usuwanie gry</title>
+</head>
+<body>
+    <h3>Potwierdź chęć usunięcia gry</h3>
+    Tytuł: <%= game.title %><br>
+    Cena: <%= game.price %> zł<br>
+    Opis: <%= game.description %>
+    <form method="POST">
+        <button type="submit">Usuń</button>
+    </form>
+</body>
+</html>

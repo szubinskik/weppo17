@@ -102,4 +102,44 @@ app.post("/edit", (req, res) => {
     })
 })
 
+app.get("/delete", (req, res) => {
+    Game.findAll({
+        where: { id: req.query.id }
+    })
+    .then(() => {
+        if(game) {
+            game.price /= 100
+            res.render("delete.ejs", game)
+        }
+        else {
+            res.setHeader("Content-type", "text/html; charset=utf-8")
+            res.end("Nie można odnaleźć żądanej gry")
+        }
+    })
+    .catch(err => {
+        console.error(err)
+        res.end("Error")
+    })
+})
+
+app.post("/delete", (req, res) => {
+    Game.destroy({
+        where: { id: req.query.id }
+    })
+    .then(count => {
+        if(count > 0) {
+            res.setHeader("Content-type", "text/html; charset=utf-8")
+            res.end("Pomyślnie usunięto grę")
+        }
+        else {
+            res.setHeader("Content-type", "text/html; charset=utf-8")
+            res.end("Nie można odnaleźć żądanej gry")
+        }
+    })
+    .catch(err => {
+        console.error(err)
+        res.end("Error")
+    })
+})
+
 http.createServer(app).listen(3000)
