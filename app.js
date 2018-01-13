@@ -12,6 +12,36 @@ app.set("view engine", "ejs")
 app.use(express.urlencoded({ extended: true }))
 app.use(express.static("public"))
 
+app.get("/list", (req, res) => {
+    var data = [];
+    var title = req.query.title||"";
+    Game.findAll({
+        where : {
+            title : {
+                [Op.iRegexp]: `.?${title}.?`
+            }
+        }
+    }).then(games => {
+        if(!games)
+        {
+            res.setHeader("Content-type", "text/html; charset=utf-8")
+            res.end("Baza gier jest pusta")
+        }
+        for(game of games)
+            data.push({
+                id : game.id,
+                title : game.title,
+                price : game.price / 100,
+                description : game.description
+            });
+        res.render("list.ejs", {games : data});
+    })
+    .catch(err => {
+        console.error(err)
+        res.end("Error")
+    })
+})
+
 app.get("/add", (req, res) => {
     res.render("add.ejs")
 })

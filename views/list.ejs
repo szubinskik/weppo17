@@ -1,0 +1,16 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+    <meta charset="UTF-8">
+    <title>Lista gier</title>
+</head>
+<body>
+    <form action="/list", method="get">
+    Wpisz szukany tytuł: <input type="text" name="title"/>
+    <input type="submit" value="Szukaj">
+    </form>
+    <% for(game of games) { %>
+        <%- include("gameView.ejs", game) %>
+    <% } %>
+</body>
+</html>
