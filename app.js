@@ -1,7 +1,9 @@
 const express = require("express")
 const http = require("http")
 const session = require("express-session")
+
 const bcrypt = require("bcrypt")
+const saltRounds = 11
 
 const models = require("./models.js")
 const Op = models.Op
@@ -52,9 +54,8 @@ app.get("/add", (req, res) => {
 
 app.post("/add", (req, res) => {
     req.body.price = req.body.price.replace(",", ".") * 100
-    const game = Game.build(req.body)
-    game.save()
-    .then(() => {
+    Game.build(req.body)
+    .then(game => {
         res.setHeader("Content-type", "text/html; charset=utf-8")
         res.end("Pomyślnie dodano grę.<br>Jej id to: " + game.id)
     })
@@ -167,6 +168,44 @@ app.post("/login", async (req, res) => {
         console.error(err)
         res.end("Error")
     }
+})
+
+app.get("/register", (req, res) => {
+    res.render("register.ejs")
+})
+
+app.post("/register", async (req, res) => {
+    try {
+        var hash = await bcrypt.hash(req.body.password, saltRounds)
+        var user = await User.create({
+            username: req.body.username,
+            password: hash
+        })
+        res.setHeader("Content-type", "text/html; charset=utf-8")
+        res.end("Pomyślnie zalogowano")
+    }
+    catch(err) {
+        console.error(err)
+        res.end("Error")
+    }
+})
+
+app.post("/checkExist", (req, res) => {
+    User.findOne({
+        where: { user: req.body.user }
+    })
+    .then(user => {
+        if(user) {
+            res.end(true)
+        }
+        else {
+            res.end(false)
+        }
+    })
+    .catch(err => {
+        console.error(err)
+        res.end("Error")
+    })
 })
 
 http.createServer(app).listen(3000)
