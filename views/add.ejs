@@ -6,12 +6,15 @@
 </head>
 <body>
     <h2>Dodawanie gry</h2>
-    <%- include("gameForm.ejs", {
-        game: {
-            title: "",
-            price: "",
-            description: ""
-        }
-    }) %>
+    <script src="/scripts/gameValidate.js"></script>
+    <form method="POST" id="gameForm">
+        <%- include("gameForm.ejs", {
+            game: {
+                title: "",
+                price: "",
+                description: ""
+            },
+        }) %>
+    </form>
 </body>
 </html>

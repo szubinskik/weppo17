@@ -6,7 +6,11 @@
 </head>
 <body>
     <h2>Edycja gry</h2>
-    <%- include("gameForm.ejs") %>
+    <script src="/scripts/gameValidate.js"></script>
+    <form method="POST" id="gameForm" action="/edit">
+        <%- include("gameForm.ejs") %>
+        <input type="hidden" name="id" value="<%= game.id %>">
+    </form>
     <h4>Dotychczasowe dane</h4>
     Tytuł: <%= game.title %><br>
     Cena: <%= game.price %> zł<br>

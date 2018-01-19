@@ -4,8 +4,10 @@ const http = require("http")
 const models = require("./models.js")
 const Op = models.Op
 const Game = models.Game
+const User = models.User
 
 Game.sync()
+User.sync()
 
 const app = express()
 app.set("view engine", "ejs")
@@ -66,7 +68,7 @@ app.get("/edit", (req, res) => {
     })
     .then(game => {
         if(game) {
-            game.price /= 100
+            game.price = (game.price / 100).toFixed(2)
             res.render("edit.ejs", { game: game })
         }
         else {
@@ -82,7 +84,7 @@ app.get("/edit", (req, res) => {
 
 app.post("/edit", (req, res) => {
     Game.findOne({
-        where: { id: req.query.id }
+        where: { id: req.body.id }
     })
     .then(game => {
         if(game) {
@@ -103,13 +105,13 @@ app.post("/edit", (req, res) => {
 })
 
 app.get("/delete", (req, res) => {
-    Game.findAll({
+    Game.findOne({
         where: { id: req.query.id }
     })
-    .then(() => {
+    .then(game => {
         if(game) {
-            game.price /= 100
-            res.render("delete.ejs", game)
+            game.price = (game.price / 100).toFixed(2)
+            res.render("delete.ejs", { game: game })
         }
         else {
             res.setHeader("Content-type", "text/html; charset=utf-8")
@@ -124,7 +126,7 @@ app.get("/delete", (req, res) => {
 
 app.post("/delete", (req, res) => {
     Game.destroy({
-        where: { id: req.query.id }
+        where: { id: req.body.id }
     })
     .then(count => {
         if(count > 0) {

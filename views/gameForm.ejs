@@ -1,20 +1,17 @@
-<script src="/scripts/gameValidate.js"></script>
-<form method="POST" id="gameForm">
-    <table>
-        <tr>
-            <td align="right">Tytuł: </td>
-            <td><input type="text" name="title" id = "title" maxlength="100" value="<%= game.title %>"></td>
-            <td id="titleMes"></td>
-        </tr>
-        <tr>
-            <td align="right">Cena: </td>
-            <td><input type="text" name="price" id="price" size="5" value="<%= game.price %>"> zł</td>
-            <td id="priceMes"></td>
-        </tr>
-        <tr>
-            <td align="right" valign="top">Opis: </td>
-            <td><textarea name="description" cols="30" rows="5"><%= game.description %></textarea></td>
-        </tr>
-    </table>
-    <button type="submit">Zatwierdź</button>
-</form>
+<table>
+    <tr>
+        <td align="right">Tytuł: </td>
+        <td><input type="text" name="title" id = "title" maxlength="100" value="<%= game.title %>"></td>
+        <td id="titleMes"></td>
+    </tr>
+    <tr>
+        <td align="right">Cena: </td>
+        <td><input type="text" name="price" id="price" size="5" value="<%= game.price %>"> zł</td>
+        <td id="priceMes"></td>
+    </tr>
+    <tr>
+        <td align="right" valign="top">Opis: </td>
+        <td><textarea name="description" cols="30" rows="5"><%= game.description %></textarea></td>
+    </tr>
+</table>
+<button type="submit">Zatwierdź</button>

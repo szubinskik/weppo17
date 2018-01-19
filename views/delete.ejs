@@ -9,7 +9,8 @@
     Tytuł: <%= game.title %><br>
     Cena: <%= game.price %> zł<br>
     Opis: <%= game.description %>
-    <form method="POST">
+    <form method="POST" action="/delete">
+        <input type="hidden" name="id" value="<%= game.id %>">
         <button type="submit">Usuń</button>
     </form>
 </body>
