@@ -1,5 +1,7 @@
 const express = require("express")
 const http = require("http")
+const session = require("express-session")
+const bcrypt = require("bcrypt")
 
 const models = require("./models.js")
 const Op = models.Op
@@ -142,6 +144,29 @@ app.post("/delete", (req, res) => {
         console.error(err)
         res.end("Error")
     })
+})
+
+app.get("/login", (req, res) => {
+    res.render("login.ejs", { wrong: false })
+})
+
+app.post("/login", async (req, res) => {
+    try {
+        var user = await User.findOne({
+            where: { username: req.body.username }
+        })
+        if(user && await bcrypt.compare(req.body.password, user.password)) {
+            res.setHeader("Content-type", "text/html; charset=utf-8")
+            res.end("Pomyślnie zalogowano")
+        }
+        else {
+            res.render("login.ejs", { wrong: true })
+        }
+    }
+    catch(err) {
+        console.error(err)
+        res.end("Error")
+    }
 })
 
 http.createServer(app).listen(3000)

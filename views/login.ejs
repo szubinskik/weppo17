@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Logowanie</title>
+</head>
+<body>
+    <form method="POST">
+        <table>
+            <tr>
+                <td align="right">Login: </td>
+                <td><input type="text" name="username"></td>
+            </tr>
+            <tr>
+                <td align="right">Hasło: </td>
+                <td><input type="password"></td>
+            </tr>
+        </table>
+        <button type="submit">Zaloguj</button>
+    </form>
+    <% if(wrong) { %>
+        Błędna nazwa użytkownika lub hasło
+    <% } %>
+
+    Nie masz konta? <a href="/register">Zarejestruj się!</a>
+</body>
+</html>
