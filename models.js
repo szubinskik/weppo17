@@ -25,3 +25,19 @@ module.exports.Game = sequelize.define("games", {
     },
     description: Sequelize.TEXT
 })
+
+module.exports.User = sequelize.define("users", {
+    id: {
+        type: Sequelize.INTEGER,
+        autoIncrement: true, 
+        primaryKey: true
+    },
+    username: {
+        type: Sequelize.STRING(30),
+        allowNull: false
+    },
+    password: {
+        type: Sequelize.STRING(60),
+        allowNull: false
+    }
+})
