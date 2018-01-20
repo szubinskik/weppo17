@@ -17,6 +17,7 @@
   },
   "homepage": "https://github.com/rufus44/weppo17#readme",
   "dependencies": {
+    "bcrypt": "^1.0.3",
     "ejs": "^2.5.7",
     "express": "^4.16.2",
     "express-session": "^1.15.6",
