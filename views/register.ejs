@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <script src="/scripts/userValidate.js"></script>
+    <title>Rejestracja</title>
+</head>
+<body>
+    <form method="POST" id="userForm">
+        <table>
+            <tr>
+                <td align="right">Login: </td>
+                <td><input type="text" name="username" id="username" maxlength="30"></td>
+                <td id="nameMes"></td>
+            </tr>
+            <tr>
+                <td align="right">Hasło: </td>
+                <td><input type="password" name="password" id="password" maxlength="30"></td>
+                <td id="passMes"></td>
+            </tr>
+            <tr>
+                <td align="right">Powtórz hasło: </td>
+                <td><input type="password" id="rePassword"></td>
+                <td id="rePassMes"></td>
+            </tr>
+        </table>
+        <button type="submit">Utwórz konto</button>
+    </form>
+</body>
+</html>
