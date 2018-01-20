@@ -54,7 +54,7 @@ app.get("/add", (req, res) => {
 
 app.post("/add", (req, res) => {
     req.body.price = req.body.price.replace(",", ".") * 100
-    Game.build(req.body)
+    Game.create(req.body)
     .then(game => {
         res.setHeader("Content-type", "text/html; charset=utf-8")
         res.end("Pomyślnie dodano grę.<br>Jej id to: " + game.id)

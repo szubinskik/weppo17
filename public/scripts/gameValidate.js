@@ -11,7 +11,7 @@ window.addEventListener("load", event => {
 
         if(title.length > 0 && title.length <= 100) {
             document.getElementById("titleMes").innerHTML = ""
-            priceOk = true
+            titleOk = true
         }
         else {
             document.getElementById("titleMes").innerHTML = "Tytuł gry musi mieć od 1 do 100 znaków"
