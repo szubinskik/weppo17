@@ -15,10 +15,22 @@ User.sync()
 
 const app = express()
 app.set("view engine", "ejs")
+app.set('views', './views');
 app.use(express.urlencoded({ extended: true }))
 app.use(express.static("public"))
 
-app.get("/list", (req, res) => {
+// na razie bez większego zastanowienia nad ustawieniami
+app.use(session({
+    secret: 'keyboard cat',
+    cookie: { secure: false }
+}))
+
+app.locals.Game = Game
+app.locals.Op = Op
+
+require('./routes')(app);
+
+app.get('/list', (req, res) => {
     var data = [];
     var title = req.query.title||"";
     Game.findAll({
@@ -30,8 +42,8 @@ app.get("/list", (req, res) => {
     }).then(games => {
         if(!games)
         {
-            res.setHeader("Content-type", "text/html; charset=utf-8")
-            res.end("Baza gier jest pusta")
+            res.setHeader("Content-type", "text/html; charset=utf-8");
+            res.end("Baza gier jest pusta");
         }
         for(game of games)
             data.push({
@@ -43,8 +55,8 @@ app.get("/list", (req, res) => {
         res.render("list.ejs", {games : data});
     })
     .catch(err => {
-        console.error(err)
-        res.end("Error")
+        console.error(err);
+        res.end("Error");
     })
 })
 
@@ -158,8 +170,9 @@ app.post("/login", async (req, res) => {
         })
         if(user && await bcrypt.compare(req.body.password, user.password)) {
             res.setHeader("Content-type", "text/html; charset=utf-8")
-            res.end("Pomyślnie zalogowano")
             // Tu jakieś dane do sesji
+            req.session.user = user
+            res.end("Pomyślnie zalogowano")
         }
         else {
             res.render("login.ejs", { wrong: true })

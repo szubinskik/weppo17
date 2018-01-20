@@ -5,6 +5,7 @@
     <title>Lista gier</title>
 </head>
 <body>
+    <%- include("basketWidget.ejs") %>
     <form action="/list", method="get">
     Wpisz szukany tytuł: <input type="text" name="title"/>
     <input type="submit" value="Szukaj">
