@@ -13,13 +13,13 @@
             </tr>
             <tr>
                 <td align="right">Hasło: </td>
-                <td><input type="password"></td>
+                <td><input type="password" name="password"></td>
             </tr>
         </table>
         <button type="submit">Zaloguj</button>
     </form>
     <% if(wrong) { %>
-        Błędna nazwa użytkownika lub hasło
+        Błędna nazwa użytkownika lub hasło<br>
     <% } %>
 
     Nie masz konta? <a href="/register">Zarejestruj się!</a>
