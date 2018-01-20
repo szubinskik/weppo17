@@ -159,6 +159,7 @@ app.post("/login", async (req, res) => {
         if(user && await bcrypt.compare(req.body.password, user.password)) {
             res.setHeader("Content-type", "text/html; charset=utf-8")
             res.end("Pomyślnie zalogowano")
+            // Tu jakieś dane do sesji
         }
         else {
             res.render("login.ejs", { wrong: true })
@@ -182,7 +183,7 @@ app.post("/register", async (req, res) => {
             password: hash
         })
         res.setHeader("Content-type", "text/html; charset=utf-8")
-        res.end("Pomyślnie zalogowano")
+        res.end("Pomyślnie zarejestrowano. <a href='/login'>Zaloguj się</a>")
     }
     catch(err) {
         console.error(err)
@@ -192,7 +193,7 @@ app.post("/register", async (req, res) => {
 
 app.post("/checkExist", (req, res) => {
     User.findOne({
-        where: { user: req.body.user }
+        where: { username: req.body.user }
     })
     .then(user => {
         if(user) {
