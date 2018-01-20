@@ -6,16 +6,15 @@ window.addEventListener("load", event => {
         var title = document.getElementById("title").value
         var price = document.getElementById("price").value
                 
-        var titleOk = true
-        var priceOk = true
+        var titleOk = false
+        var priceOk = false
 
-        if(title.length > 0) {
+        if(title.length > 0 && title.length <= 100) {
             document.getElementById("titleMes").innerHTML = ""
             priceOk = true
         }
-            else {
-            document.getElementById("titleMes").innerHTML = "To pole nie może być puste"
-            titleOk = false
+        else {
+            document.getElementById("titleMes").innerHTML = "Tytuł gry musi mieć od 1 do 100 znaków"
         }
 
         if(price.match(/^[1-9]\d*([\.,]\d\d)?$/)) {
@@ -24,7 +23,6 @@ window.addEventListener("load", event => {
         }
         else {
             document.getElementById("priceMes").innerHTML = "Niepoprawna cena"
-            priceOk = false
         }
 
         if(titleOk && priceOk) {
