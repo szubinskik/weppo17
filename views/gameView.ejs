@@ -2,5 +2,5 @@
     <h1><%= game.title %></h1>
     <p><b>Opis:</b><%= game.description %></p>
     <p><b>Cena:</b><%= game.price %> PLN</p>
-    <button onclick="var req = new XMLHttpRequest();req.open('get', '/_basket?id=<%= game.id %>', true);req.send()">Dodaj do koszyka</button>
+    <button onclick="var req = new XMLHttpRequest();req.open('put', '/_basket?id=<%= game.id %>', true);req.send()">Dodaj do koszyka</button>
 </div>
