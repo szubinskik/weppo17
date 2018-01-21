@@ -1,3 +1,33 @@
-<div>
-    <p>Tytuł: <%= item.title %> liczba: <%= item.count %> cena: <%= item.count*item.price %></p>
+<div style="border: 1px solid black">
+    <p>Tytuł: <%= item.title %> liczba: <%= item.count %> cena: <span id="count_<%= item.id %>"><%= item.count*item.price %></span></p><br />
+    <button onclick="var req = new XMLHttpRequest();req.open('delete', '/_basket?id=<%= item.id %>', true);
+        req.onreadystatechange = function()
+        {
+            if ( req.readyState == XMLHttpRequest.DONE )
+            {
+                if (req.responseText == '0')
+                    location.reload();
+            }
+        };
+        req.send()">Usuń</button>
+    <button onclick="var req = new XMLHttpRequest();req.open('put', '/_basket?id=<%= item.id %>', true);
+        req.onreadystatechange = function()
+        {
+            if ( req.readyState == XMLHttpRequest.DONE )
+            {
+                if (req.responseText == '0')
+                    location.reload();
+            }
+        };
+        req.send()">Dodaj</button>
+    <button onclick="var req = new XMLHttpRequest();req.open('delete', '/_basket?id=<%= item.id %>&all=yes', true);
+        req.onreadystatechange = function()
+        {
+            if ( req.readyState == XMLHttpRequest.DONE )
+            {
+                if (req.responseText == '0')
+                    location.reload();
+            }
+        };
+        req.send()">Usuń wszystkie</button>
 </div>

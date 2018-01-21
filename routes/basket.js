@@ -113,8 +113,16 @@ module.exports = function(app){
         req.session.basket = _basket_session(); 
       var basket = req.session.basket;
 
-      if (basket.items[nid])
+      if (req.query.all == 'yes')
+      {
+        delete basket.items[nid];
+        res.end('0');
+      }
+
+      if (basket.items[nid] > 1)
         basket.items[nid]--;
+      else
+        delete basket.items[nid];
 
       res.end('0');
     }
