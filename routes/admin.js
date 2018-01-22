@@ -125,7 +125,7 @@ module.exports = function(app) {
         var query = req.query.name || ""
         User.findAll({
             where: {
-                username: { [Op.like]: `%${query}%` }
+                username: { [Op.iLike]: `%${query}%` }
             }
         })
         .then(users => {
