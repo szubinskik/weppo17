@@ -7,9 +7,7 @@ const sequelize = new Sequelize({
     dialect: "postgres"
 })
 
-module.exports.Op = Sequelize.Op
-
-module.exports.Game = sequelize.define("games", {
+const Game = sequelize.define("games", {
     id: {
         type: Sequelize.INTEGER,
         autoIncrement: true, 
@@ -26,7 +24,7 @@ module.exports.Game = sequelize.define("games", {
     description: Sequelize.TEXT
 })
 
-module.exports.User = sequelize.define("users", {
+const User = sequelize.define("users", {
     id: {
         type: Sequelize.INTEGER,
         autoIncrement: true, 
@@ -41,3 +39,22 @@ module.exports.User = sequelize.define("users", {
         allowNull: false
     }
 })
+
+const Order = sequelize.define("orders", {
+    id: {
+        type: Sequelize.INTEGER,
+        autoIncrement: true, 
+        primaryKey: true
+    }
+})
+
+User.hasMany(Order)
+Game.belongsToMany(Order, { through: "gameOrders" })
+Order.belongsToMany(Game, { through: "gameOrders" })
+
+sequelize.sync()
+
+module.exports.Op = Sequelize.Op
+module.exports.Game = Game
+module.exports.User = User
+module.exports.Order = Order

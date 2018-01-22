@@ -3,15 +3,13 @@ const http = require("http")
 const session = require("express-session")
 
 const bcrypt = require("bcrypt")
-const saltRounds = 11
+const saltRounds = 12
 
 const models = require("./models.js")
 const Op = models.Op
 const Game = models.Game
 const User = models.User
-
-Game.sync()
-User.sync()
+const Order = models.Order
 
 const app = express()
 app.set("view engine", "ejs")
