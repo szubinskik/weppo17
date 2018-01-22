@@ -41,7 +41,7 @@ window.addEventListener("load", event => {
             req.send()
         }
         else {
-            nameOutput.innerHTML = "Nazwa używkownika musi mieć od 1 do 30 znaków"
+            nameOutput.innerHTML = "Nazwa użytkownika musi mieć od 1 do 30 znaków"
             if(handler) {
                 handler(false)
             }
