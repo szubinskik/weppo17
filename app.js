@@ -204,16 +204,16 @@ app.post("/register", async (req, res) => {
     }
 })
 
-app.post("/checkExist", (req, res) => {
+app.get("/checkExist", (req, res) => {
     User.findOne({
-        where: { username: req.body.user }
+        where: { username: req.query.user }
     })
     .then(user => {
         if(user) {
-            res.end(true)
+            res.end("1")
         }
         else {
-            res.end(false)
+            res.end("0")
         }
     })
     .catch(err => {

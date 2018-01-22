@@ -1,59 +1,105 @@
 window.addEventListener("load", event => {
-    // Form validation
-    document.getElementById("userForm").addEventListener("submit", event => {
-        event.preventDefault()
+    var form = document.getElementById("userForm")
 
-        var passOk = false
-        var rePassOk = false
+    var nameInput = document.getElementById("username")
+    var passInput = document.getElementById("password")
+    var rePassInput = document.getElementById("rePassword")
 
-        var name = document.getElementById("username").value
+    var nameOutput = document.getElementById("nameMes")
+    var passOutput = document.getElementById("passMes")
+
+    // username validation (asychronous)
+    function nameCheck(handler) {
+        var name = nameInput.value
 
         if(name.length > 0 && name.length <= 30) {
             var req = new XMLHttpRequest()
-            req.open("post", "/checkExist", true)
+            req.open("get", `/checkExist?user=${name}`, true)
             req.onreadystatechange = function() {
                 if(req.readyState == XMLHttpRequest.DONE)
                 {
-                    if(req.responseText == "Error")
-                        document.getElementById("nameMes").innerHTML = "Error"
-                    else if(req.responseText == true)
-                        document.getElementById("nameMes").innerHTML = "Ta nazwa jest już zajęta"
+                    if(req.responseText == "Error") {
+                        nameOutput.innerHTML = "Błąd bazy danych"
+                        if(handler) {
+                            handler(false)
+                        }    
+                    }
+                    else if(req.responseText == "1") {
+                        nameOutput.innerHTML = "Ta nazwa jest już zajęta"
+                        if(handler) {
+                            handler(false)
+                        }
+                    }  
                     else {
-                        document.getElementById("nameMes").innerHTML = ""
-
-                        var password = document.getElementById("password").value
-
-                        if(password.length >= 6 && password.length <= 30) {
-                            document.getElementById("passMes").innerHTML = ""
-                            passOk = true
-                        }
-                        else {
-                            document.getElementById("passMes").innerHTML = "Hasło musi mieć od 6 do 30 znaków"
-                        }
-                    
-                        var rePassword = document.getElementById("rePassword").value
-                    
-                        if(password == rePassword) {
-                            document.getElementById("rePassMes").innerHTML = ""
-                            rePassOk = true
-                        }
-                        else {
-                            document.getElementById("rePassMes").innerHTML = "Hasła nie są takie same"   
-                        }
-
-                        if(passOk && rePassOk) {
-                            document.getElementById("userForm").submit()
+                        nameOutput.innerHTML = ""
+                        if(handler) {
+                            handler(true)
                         }
                     }
                 }
             }
-            var form = new FormData()
-            form.append('user', name)
-            req.send(form)
+            req.send()
         }
         else {
-            document.getElementById("nameMes").innerHTML = "Nazwa użytkownika musi mieć od 1 do 30 znaków"
+            nameOutput.innerHTML = "Nazwa używkownika musi mieć od 1 do 30 znaków"
+            if(handler) {
+                handler(false)
+            }
         }
+    }
 
+    //password validation
+    function passCheck() {
+        var password = passInput.value
+
+        if(password.length >= 6) {
+            passOutput.innerHTML = ""
+            return true
+        }
+        else {
+            document.getElementById("passMes").innerHTML = "Hasło musi mieć co najmniej 6 znaków"
+            return false
+        }
+    }
+
+    //repeated password validation
+    function rePassCheck() {
+        var password = passInput.value
+        var rePassword = rePassInput.value
+
+        if(password == rePassword) {
+            document.getElementById("rePassMes").innerHTML = ""
+            return true
+        }
+        else {
+            document.getElementById("rePassMes").innerHTML = "Hasła nie są identyczne"
+            return false 
+        }
+    }
+
+    // Input events
+    nameInput.addEventListener("change", event => {
+        nameCheck()
+    })
+
+    passInput.addEventListener("change", event => {
+        passCheck()
+    })
+
+    rePassInput.addEventListener("change", event => {
+        rePassCheck()
+    })
+
+    // Form validation
+    form.addEventListener("submit", event => {
+        event.preventDefault()
+
+        var passOk = passCheck()
+        var rePassOk = rePassCheck()
+        nameCheck(nameOk => {
+            if(nameOk && passOk && rePassOk) {
+                form.submit()
+            }
+        })
     })
 })
