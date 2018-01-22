@@ -1,6 +1,7 @@
 module.exports = function(app) {
     const Game = app.locals.Game
     const User = app.locals.User
+    const Op = app.locals.Op
 
     app.get("/admin", (req, res) => {
         res.render("admin/admin.ejs")
@@ -117,6 +118,26 @@ module.exports = function(app) {
             console.error(err)
             res.setHeader("Content-type", "text/html; charset=utf-8")
             res.end("Błąd bazy danych<br><a href='/list'>Wróć do listy gier</a>")
+        })
+    })
+
+    app.get("/userList", (req, res) => {
+        var query = req.query.name || ""
+        User.findAll({
+            where: {
+                username: { [Op.like]: `%${query}%` }
+            }
+        })
+        .then(users => {
+            res.render("admin/userList.ejs", {
+                users: users,
+                query: query
+            })
+        })
+        .catch(err => {
+            console.error(err)
+            res.setHeader("Content-type", "text/html; charset=utf-8")
+            res.end("Błąd bazy danych")
         })
     })
 }

@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+    <meta charset="UTF-8">
+    <title>Lista użytkowników</title>
+</head>
+<body>
+    <form method="GET" action="/userList">
+        Szukaj użytkownika: 
+        <input type="text" name="name" maxlength="30" value="<%= query %>">
+        <button type="submit">Szukaj</button>
+    </form>
+    <% for(user of users) { %>
+        <%- include("userView.ejs", user) %>
+    <% } %>
+</body>
+</html>

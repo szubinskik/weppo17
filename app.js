@@ -26,6 +26,7 @@ app.use(session({
 }))
 
 app.locals.Game = Game
+app.locals.User = User
 app.locals.Op = Op
 
 require('./routes')(app);
