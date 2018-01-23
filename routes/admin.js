@@ -7,11 +7,11 @@ module.exports = function(app) {
         res.render("admin/admin.ejs")
     })
 
-    app.get("/add", (req, res) => {
-        res.render("admin/add.ejs")
+    app.get("/add", app.locals.csrfProtection, (req, res) => {
+        res.render("admin/add.ejs", { csrfToken: req.csrfToken() })
     })
     
-    app.post("/add", (req, res) => {
+    app.post("/add", app.locals.csrfProtection, (req, res) => {
         req.body.price = req.body.price.replace(",", ".") * 100
         Game.create(req.body)
         .then(game => {
@@ -19,8 +19,8 @@ module.exports = function(app) {
             res.end(
                 `Pomyślnie dodano grę.<br>
                 Jej id to: ${game.id}<br>
-                <a href = '/admin'>Wróc do panelu administratora</a>
-                <a href = '/add'>Dodaj kolejną grę</a>
+                <a href = '/admin'>Wróc do panelu administratora</a><br>
+                <a href = '/add'>Dodaj kolejną grę</a><br>
                 <a href = '/list'>Przejdź do listy gier</a>`
             )
         })
@@ -35,14 +35,14 @@ module.exports = function(app) {
         })
     })
     
-    app.get("/edit", (req, res) => {
+    app.get("/edit", app.locals.csrfProtection, (req, res) => {
         Game.findOne({
             where: { id: req.query.id }
         })
         .then(game => {
             if(game) {
                 game.price = (game.price / 100).toFixed(2)
-                res.render("admin/edit.ejs", { game: game })
+                res.render("admin/edit.ejs", { game: game, csrfToken: req.csrfToken() })
             }
             else {
                 res.setHeader("Content-type", "text/html; charset=utf-8")
@@ -56,7 +56,7 @@ module.exports = function(app) {
         })
     })
     
-    app.post("/edit", (req, res) => {
+    app.post("/edit", app.locals.csrfProtection, (req, res) => {
         Game.findOne({
             where: { id: req.body.id }
         })
@@ -79,14 +79,14 @@ module.exports = function(app) {
         })
     })
     
-    app.get("/delete", (req, res) => {
+    app.get("/delete", app.locals.csrfProtection, (req, res) => {
         Game.findOne({
             where: { id: req.query.id }
         })
         .then(game => {
             if(game) {
                 game.price = (game.price / 100).toFixed(2)
-                res.render("admin/delete.ejs", { game: game })
+                res.render("admin/delete.ejs", { game: game, csrfToken: req.csrfToken() })
             }
             else {
                 res.setHeader("Content-type", "text/html; charset=utf-8")
@@ -100,7 +100,7 @@ module.exports = function(app) {
         })
     })
     
-    app.post("/delete", (req, res) => {
+    app.post("/delete", app.locals.csrfProtection, (req, res) => {
         Game.destroy({
             where: { id: req.body.id }
         })

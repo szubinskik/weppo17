@@ -1,6 +1,7 @@
 const express = require("express")
 const http = require("http")
 const session = require("express-session")
+const csurf = require("csurf")
 
 const bcrypt = require("bcrypt")
 const saltRounds = 12
@@ -16,6 +17,7 @@ app.set("view engine", "ejs")
 app.set('views', './views');
 app.use(express.urlencoded({ extended: true }))
 app.use(express.static("public"))
+app.locals.csrfProtection = csurf()
 
 // na razie bez większego zastanowienia nad ustawieniami
 app.use(session({
