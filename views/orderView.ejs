@@ -1,0 +1,16 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Szczegóły zamówienia</title>
+</head>
+<body>
+    <h3>Zamówienie nr <%= order.id %></h3>
+    Złożono: <%= order.createdAt %><br>
+    Zamawiający: <%= order.user.username %>
+    <h4>Zamówione gry:</h4>
+    <% for(game of order.games) { %>
+        <%= game.title %><br>
+    <% } %>
+</body>
+</html>

@@ -124,4 +124,23 @@ app.get("/checkExist", (req, res) => {
     })
 })
 
+app.get("/orderDetails", (req, res) => {
+    Order.findOne({
+        where: { id: req.query.id },
+        include: [{
+            model: Game
+        }, {
+            model: User
+        }]
+    })
+    .then(order => {
+        res.render("orderView.ejs", { order: order })
+    })
+    .catch(err => {
+        console.error(err)
+        res.setHeader("Content-type", "text/html; charset=utf-8")
+        res.end("Wystąpił błąd")
+    })
+})
+
 http.createServer(app).listen(3000)

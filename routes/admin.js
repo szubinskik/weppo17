@@ -28,7 +28,7 @@ module.exports = function(app) {
             console.error(err)
             res.setHeader("Content-type", "text/html; charset=utf-8")
             res.end(
-                `Błąd bazy danych<br>
+                `Wystąpił błąd<br>
                 <a href = '/add'>Wróc do panelu dodawania gier</a><br>
                 <a href = '/admin'>Przejdź do panelu administratora</a>`
             )
@@ -52,7 +52,7 @@ module.exports = function(app) {
         .catch(err => {
             console.error(err)
             res.setHeader("Content-type", "text/html; charset=utf-8")
-            res.end("Błąd bazy danych<br><a href='/list'>Wróć do listy gier</a>")
+            res.end("Wystąpił błąd<br><a href='/list'>Wróć do listy gier</a>")
         })
     })
     
@@ -75,7 +75,7 @@ module.exports = function(app) {
         .catch(err => {
             console.error(err)
             res.setHeader("Content-type", "text/html; charset=utf-8")
-            res.end("Błąd bazy danych<br><a href='/list'>Wróć do listy gier</a>")
+            res.end("Wystąpił błąd<br><a href='/list'>Wróć do listy gier</a>")
         })
     })
     
@@ -96,7 +96,7 @@ module.exports = function(app) {
         .catch(err => {
             console.error(err)
             res.setHeader("Content-type", "text/html; charset=utf-8")
-            res.end("Błąd bazy danych<br><a href='/list'>Wróć do listy gier</a>")
+            res.end("Wystąpił błąd<br><a href='/list'>Wróć do listy gier</a>")
         })
     })
     
@@ -117,7 +117,7 @@ module.exports = function(app) {
         .catch(err => {
             console.error(err)
             res.setHeader("Content-type", "text/html; charset=utf-8")
-            res.end("Błąd bazy danych<br><a href='/list'>Wróć do listy gier</a>")
+            res.end("Wystąpił błąd<br><a href='/list'>Wróć do listy gier</a>")
         })
     })
 
@@ -137,7 +137,7 @@ module.exports = function(app) {
         .catch(err => {
             console.error(err)
             res.setHeader("Content-type", "text/html; charset=utf-8")
-            res.end("Błąd bazy danych")
+            res.end("Wystąpił błąd")
         })
     })
 }

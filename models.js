@@ -48,7 +48,7 @@ const Order = sequelize.define("orders", {
     }
 })
 
-User.hasMany(Order)
+Order.belongsTo(User)
 Game.belongsToMany(Order, { through: "gameOrders" })
 Order.belongsToMany(Game, { through: "gameOrders" })
 
