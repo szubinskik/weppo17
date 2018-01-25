@@ -48,9 +48,16 @@ const Order = sequelize.define("orders", {
     }
 })
 
+const GameOrders = sequelize.define("gameOrders", {
+    count: {
+        type: Sequelize.SMALLINT,
+        allowNull: false
+    }
+})
+
 Order.belongsTo(User)
-Game.belongsToMany(Order, { through: "gameOrders" })
-Order.belongsToMany(Game, { through: "gameOrders" })
+Game.belongsToMany(Order, { through: GameOrders })
+Order.belongsToMany(Game, { through: GameOrders })
 
 sequelize.sync()
 
