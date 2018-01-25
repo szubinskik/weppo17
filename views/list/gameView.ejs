@@ -1,0 +1,6 @@
+<div class="pure-u-1-1">
+    <h3 style="margin: 0"><%= game.title %></h1>
+    <h3 style="margin: 0"><b>Opis:</b><%= game.description %></h3>
+    <h3 style="margin: 0"><b>Cena:</b><%= game.price %> PLN</h3>
+    <button onclick="var req = new XMLHttpRequest();req.open('put', '/_basket?id=<%= game.id %>', true);req.send()" class="pure-button" >Dodaj do koszyka</button>
+</div>

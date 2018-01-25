@@ -1,0 +1,66 @@
+<!doctype html>
+
+<html lang="pl">
+<head>
+  <meta charset="utf-8">
+
+  <title>The HTML5 Herald</title>
+  <meta name="description" content="The HTML5 Herald">
+  <meta name="author" content="SitePoint">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  <link rel="stylesheet" href="https://unpkg.com/purecss@1.0.0/build/pure-min.css" integrity="sha384-nn4HPE8lTHyVtfCBi5yW9d20FjT8BJwUXyWZT9InLYax14RDjBj46LmSztkmNP9w" crossorigin="anonymous">
+  <!-- <link rel="stylesheet" href="css/styles.css?v=1.0"> -->
+  <!--[if lt IE 9]>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html5shiv/3.7.3/html5shiv.js"></script>
+  <![endif]-->
+
+    <style>
+        .pure-g > div {
+            -webkit-box-sizing: border-box;
+            -moz-box-sizing: border-box;
+            box-sizing: border-box;
+        }
+        .l-box {
+            padding: 0.9em 1em;
+            border-bottom: 1px solid #ddd;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="header">
+        <div class="pure-menu pure-menu-horizontal">
+            <div class="pure-u-1-2">
+            <a href="#" class="pure-menu-heading pure-menu-link">BRAND</a>
+            </div>
+            <div class="pure-u-1-2">
+            <ul class="pure-menu-list" style="float: right">
+                <li class="pure-menu-item"><a href="#" class="pure-menu-link">News</a></li>
+                <li class="pure-menu-item"><a href="#" class="pure-menu-link">Sports</a></li>
+                <li class="pure-menu-item"><a href="#" class="pure-menu-link">Finance</a></li>
+            </ul>
+            </div>            
+        </div>
+    </div>
+
+    <div class="pure-g">
+        <!-- kolumna z listą gier -->    
+        <div class="pure-u-1-8">    
+                <% for(game of games) { %>
+                <div class="pure-g l-box">
+                    <%- include("gameView.ejs", game) %>
+                </div>
+                <% } %>
+        </div>
+
+        <!-- kolumna z podglądem gry -->
+        <div class="pure-u-7-8">
+            <form action="/list", method="get">
+            Wpisz szukany tytuł: <input type="text" name="title"/>
+            <input type="submit" value="Szukaj">
+        </div>
+    </div>
+</div>
+</body>
+</html>

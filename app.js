@@ -53,7 +53,7 @@ app.get('/list', (req, res) => {
                 price : game.price / 100,
                 description : game.description
             });
-        res.render("list.ejs", {games : data});
+        res.render("list/list.ejs", {games : data});
     })
     .catch(err => {
         console.error(err);
