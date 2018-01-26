@@ -32,34 +32,8 @@ app.locals.Op = Op
 
 require('./routes')(app);
 
-app.get('/list', (req, res) => {
-    var data = [];
-    var title = req.query.title||"";
-    Game.findAll({
-        where : {
-            title : {
-                [Op.iRegexp]: `.?${title}.?`
-            }
-        }
-    }).then(games => {
-        if(!games)
-        {
-            res.setHeader("Content-type", "text/html; charset=utf-8");
-            res.end("Baza gier jest pusta");
-        }
-        for(game of games)
-            data.push({
-                id : game.id,
-                title : game.title,
-                price : game.price / 100,
-                description : game.description
-            });
-        res.render("list.ejs", {games : data});
-    })
-    .catch(err => {
-        console.error(err);
-        res.end("Error");
-    })
+app.get('/', (req, res) => {
+    res.render('index.ejs');
 })
 
 app.get("/login", (req, res) => {
