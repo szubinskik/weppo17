@@ -1,15 +1,23 @@
 <form class="form-inline my-2 my-lg-0">
+<% if(locals.user) { %>
     <label style="margin-right: 5px">
         <span class="badge badge-info">14.88 PLN</span>
     </label>
     <a href="basket">
-        <button type=button class="btn btn-light">
+        <button type="button" class="btn btn-light">
             <svg-icon class="basket-icon"><src href="sprite/sprite.svg#si-glyph-basket" /></svg-icon>
         </button>
     </a>
     <a href="logout">
-        <button type=button class="btn btn-light">
-            <svg-icon class="basket-icon"><src href="sprite/sprite.svg#si-glyph-door" /></svg-icon>
+        <button type="button" class="btn btn-light">
+            <svg-icon class="basket-icon"><src href="sprite/sprite.svg#si-glyph-sign-out" /></svg-icon>
         </button>
     </a>
+<% } else { %>
+    <a href="login">
+        <button type="button" class="btn btn-light">
+            <svg-icon class="basket-icon"><src href="sprite/sprite.svg#si-glyph-sign-in" /></svg-icon>
+        </button>
+    </a>
+<% } %>
 </form>

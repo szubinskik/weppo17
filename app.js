@@ -34,7 +34,8 @@ app.locals.Op = Op
 require('./routes')(app);
 
 app.get('/', (req, res) => {
-    res.render('index.ejs');
+    var user = req.session.user||null;
+    res.render('index.ejs', { user: user });
 })
 
 app.get("/login", (req, res) => {
@@ -50,7 +51,7 @@ app.post("/login", async (req, res) => {
             res.setHeader("Content-type", "text/html; charset=utf-8")
             // Tu jakieś dane do sesji
             req.session.user = user
-            res.end("Pomyślnie zalogowano")
+            res.redirect('/');
         }
         else {
             res.render("login.ejs", { wrong: true })
