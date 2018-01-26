@@ -7,6 +7,7 @@ const bcrypt = require("bcrypt")
 const saltRounds = 12
 
 const models = require("./models.js")
+const sequelize = models.sequelize
 const Op = models.Op
 const Game = models.Game
 const User = models.User
@@ -134,6 +135,12 @@ app.get("/orderDetails", (req, res) => {
         }]
     })
     .then(order => {
+        order.total = 0
+        order.games.forEach(game => {
+            game.count = game.gameOrders.count
+            game.total = game.count * game.price / 100
+            order.total += game.total
+        })
         res.render("orderView.ejs", { order: order })
     })
     .catch(err => {

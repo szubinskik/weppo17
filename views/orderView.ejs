@@ -10,7 +10,9 @@
     Zamawiający: <%= order.user.username %>
     <h4>Zamówione gry:</h4>
     <% for(game of order.games) { %>
-        <%= game.title %><br>
+        <b><%= game.title %></b>:
+        <%= (game.price / 100).toFixed(2) %> * <%= game.count %> = <%= game.total.toFixed(2) %><br>
     <% } %>
+    Suma: <%= order.total.toFixed(2) %>
 </body>
 </html>
