@@ -7,7 +7,6 @@ const bcrypt = require("bcrypt")
 const saltRounds = 12
 
 const models = require("./models.js")
-const sequelize = models.sequelize
 const Op = models.Op
 const Game = models.Game
 const User = models.User
@@ -118,6 +117,42 @@ app.get("/orderDetails", (req, res) => {
             order.total += game.total
         })
         res.render("orderDetails.ejs", { order: order })
+    })
+    .catch(err => {
+        console.error(err)
+        res.setHeader("Content-type", "text/html; charset=utf-8")
+        res.end("Wystąpił błąd")
+    })
+})
+
+app.get("/userOrderHistory", (req, res) => {
+    User.findOne({
+        where: { id: req.query.id }
+    })
+    .then(user => {
+        if(user) {
+            Order.findAll({
+                include: [{
+                    model: Game
+                }, {
+                    model: User,
+                    where: { id: req.query.id }
+                }]
+            })
+            .then(orders => {
+                orders.forEach(order => {
+                    order.total = 0
+                    order.games.forEach(game => {
+                        order.total += game.gameOrders.count * game.price / 100
+                    })
+                })
+                res.render("userOrderHistory.ejs", { orders: orders, username: user.username })
+            })
+        }
+        else {
+            res.setHeader("Content-type", "text/html; charset=utf-8")
+            res.end("Nie znaleziono użytkownika")
+        }
     })
     .catch(err => {
         console.error(err)
