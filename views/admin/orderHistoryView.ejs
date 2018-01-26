@@ -1,0 +1,6 @@
+<div style="border: 1px solid black;">
+    <b><%= order.id %>.</b><br>
+    Złożono: <%= order.createdAt.toLocaleString("pl-PL") %><br>
+    Zamawiający: <%= order.user.username %><br>
+    <a href="/orderDetails?id=<%= order.id %>">Zobacz szczegóły</a>
+</div>

@@ -1,6 +1,7 @@
 module.exports = function(app) {
     const Game = app.locals.Game
     const User = app.locals.User
+    const Order = app.locals.Order
     const Op = app.locals.Op
 
     app.get("/admin", (req, res) => {
@@ -131,6 +132,29 @@ module.exports = function(app) {
         .then(users => {
             res.render("admin/userList.ejs", {
                 users: users,
+                query: query
+            })
+        })
+        .catch(err => {
+            console.error(err)
+            res.setHeader("Content-type", "text/html; charset=utf-8")
+            res.end("Wystąpił błąd")
+        })
+    })
+
+    app.get("/orderHistory", (req, res) => {
+        var query = req.query.name || ""
+        Order.findAll({
+            include: {
+                model: User,
+                where: {
+                    username: { [Op.iLike]: `%${query}%`}
+                }
+            }
+        })
+        .then(orders => {
+            res.render("admin/orderHistory.ejs", {
+                orders: orders,
                 query: query
             })
         })

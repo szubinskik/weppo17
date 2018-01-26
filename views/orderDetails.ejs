@@ -6,13 +6,14 @@
 </head>
 <body>
     <h3>Zamówienie nr <%= order.id %></h3>
-    Złożono: <%= order.createdAt %><br>
+    Złożono: <%= order.createdAt.toLocaleString("pl-PL") %><br>
     Zamawiający: <%= order.user.username %>
     <h4>Zamówione gry:</h4>
     <% for(game of order.games) { %>
         <b><%= game.title %></b>:
         <%= (game.price / 100).toFixed(2) %> * <%= game.count %> = <%= game.total.toFixed(2) %><br>
     <% } %>
-    Suma: <%= order.total.toFixed(2) %>
+    Suma: <%= order.total.toFixed(2) %><br><br>
+    <a href="javascript:history.back()">Wróć</a>
 </body>
 </html>
