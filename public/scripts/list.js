@@ -1,6 +1,6 @@
 window.addEventListener('load', refresh_games(''));
 
-function b_search_clicked()
+function f_search_submit()
 {
     var phrase = document.getElementById('t_search').value;
     refresh_games(phrase);    
