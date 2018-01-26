@@ -19,10 +19,13 @@ app.use(express.urlencoded({ extended: true }))
 app.use(express.static("public"))
 app.locals.csrfProtection = csurf()
 
-// na razie bez większego zastanowienia nad ustawieniami
+// sesja wygasa po 10 minutach
 app.use(session({
     secret: 'keyboard cat',
-    cookie: { secure: false }
+    cookie: { secure: false, maxAge: 10 * 60 * 1000 }, 
+    rolling: true,
+    saveUninitialized: false,
+    resave: true
 }))
 
 app.locals.Game = Game
