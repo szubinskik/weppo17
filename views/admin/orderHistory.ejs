@@ -2,7 +2,7 @@
 <html lang="pl">
 <head>
     <meta charset="UTF-8">
-    <title>Lista użytkowników</title>
+    <title>Historia zamówień</title>
 </head>
 <body>
     <form method="GET" action="/userList">
@@ -10,8 +10,8 @@
         <input type="text" name="name" maxlength="30" value="<%= query %>">
         <button type="submit">Szukaj</button>
     </form>
-    <% for(user of users) { %>
-        <%- include("userView.ejs", { user: user }) %>
+    <% for(order of orders) { %>
+        <%- include("orderHistoryView.ejs", { order: order }) %>
     <% } %>
 </body>
 </html>

@@ -28,6 +28,7 @@ app.use(session({
 
 app.locals.Game = Game
 app.locals.User = User
+app.locals.Order = Order
 app.locals.Op = Op
 
 require('./routes')(app);
@@ -141,7 +142,7 @@ app.get("/orderDetails", (req, res) => {
             game.total = game.count * game.price / 100
             order.total += game.total
         })
-        res.render("orderView.ejs", { order: order })
+        res.render("orderDetails.ejs", { order: order })
     })
     .catch(err => {
         console.error(err)
