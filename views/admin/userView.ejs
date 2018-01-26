@@ -1,6 +1,5 @@
 <div style="border: 1px solid black;">
     <h3><%= user.username %></h3>
     Zarejestrowany: <%= user.createdAt.toLocaleString("pl-PL") %><br>
-    <!-- Przykładowe opcje -->
-    <button>Historia zamówień</button>
-</div>
+    <a href="/userOrderHistory?id=<%= user.id %>">Historia zamówień</a>
+</di>

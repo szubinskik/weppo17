@@ -61,7 +61,6 @@ Order.belongsToMany(Game, { through: GameOrders })
 
 sequelize.sync()
 
-module.exports.sequelize = sequelize
 module.exports.Op = Sequelize.Op
 module.exports.Game = Game
 module.exports.User = User
