@@ -37,6 +37,10 @@ const User = sequelize.define("users", {
     password: {
         type: Sequelize.STRING(60),
         allowNull: false
+    },
+    admin: {
+        type: Sequelize.BOOLEAN,
+        defaultValue: false
     }
 })
 

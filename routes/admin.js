@@ -4,15 +4,27 @@ module.exports = function(app) {
     const Order = app.locals.Order
     const Op = app.locals.Op
 
-    app.get("/admin", (req, res) => {
+    const csrfProtection = app.locals.csrfProtection
+
+    function authorizeAdmin(req, res, next) {
+        console.log(req.session.user)
+        if(req.session.user && req.session.user.admin) {
+            next()
+        }
+        else {
+            res.render("user/denied.ejs")
+        }
+    }
+
+    app.get("/admin", authorizeAdmin, (req, res) => {
         res.render("admin/admin.ejs")
     })
 
-    app.get("/add", app.locals.csrfProtection, (req, res) => {
+    app.get("/add", authorizeAdmin, csrfProtection, (req, res) => {
         res.render("admin/add.ejs", { csrfToken: req.csrfToken() })
     })
     
-    app.post("/add", app.locals.csrfProtection, (req, res) => {
+    app.post("/add", authorizeAdmin, csrfProtection, (req, res) => {
         req.body.price = req.body.price.replace(",", ".") * 100
         Game.create(req.body)
         .then(game => {
@@ -29,14 +41,14 @@ module.exports = function(app) {
             console.error(err)
             res.setHeader("Content-type", "text/html; charset=utf-8")
             res.end(
-                `Wystąpił błąd<br>
-                <a href = '/add'>Wróc do panelu dodawania gier</a><br>
-                <a href = '/admin'>Przejdź do panelu administratora</a>`
+                "Wystąpił błąd<br>\
+                <a href = '/add'>Wróc do panelu dodawania gier</a><br>\
+                <a href = '/admin'>Przejdź do panelu administratora</a>"
             )
         })
     })
     
-    app.get("/edit", app.locals.csrfProtection, (req, res) => {
+    app.get("/edit", authorizeAdmin, csrfProtection, (req, res) => {
         Game.findOne({
             where: { id: req.query.id }
         })
@@ -57,7 +69,7 @@ module.exports = function(app) {
         })
     })
     
-    app.post("/edit", app.locals.csrfProtection, (req, res) => {
+    app.post("/edit", authorizeAdmin, csrfProtection, (req, res) => {
         Game.findOne({
             where: { id: req.body.id }
         })
@@ -80,7 +92,7 @@ module.exports = function(app) {
         })
     })
     
-    app.get("/delete", app.locals.csrfProtection, (req, res) => {
+    app.get("/delete", authorizeAdmin, csrfProtection, (req, res) => {
         Game.findOne({
             where: { id: req.query.id }
         })
@@ -101,7 +113,7 @@ module.exports = function(app) {
         })
     })
     
-    app.post("/delete", app.locals.csrfProtection, (req, res) => {
+    app.post("/delete", authorizeAdmin, csrfProtection, (req, res) => {
         Game.destroy({
             where: { id: req.body.id }
         })
@@ -122,7 +134,7 @@ module.exports = function(app) {
         })
     })
 
-    app.get("/userList", (req, res) => {
+    app.get("/userList", authorizeAdmin, (req, res) => {
         var query = req.query.name || ""
         User.findAll({
             where: {
@@ -142,7 +154,7 @@ module.exports = function(app) {
         })
     })
 
-    app.get("/orderHistory", (req, res) => {
+    app.get("/orderHistory", authorizeAdmin, (req, res) => {
         var query = req.query.name || ""
         Order.findAll({
             include: {

@@ -14,7 +14,7 @@ window.addEventListener("load", event => {
 
         if(name.length > 0 && name.length <= 30) {
             var req = new XMLHttpRequest()
-            req.open("get", `/checkExist?user=${name}`, true)
+            req.open("get", `/_checkExist?user=${name}`, true)
             req.onreadystatechange = function() {
                 if(req.readyState == XMLHttpRequest.DONE)
                 {
