@@ -34,7 +34,8 @@ require('./routes')(app);
 
 app.get('/', (req, res) => {
     var user = req.session.user||null;
-    res.render('index.ejs', { user: user });
+    var basket = req.session.basket||null;
+    res.render('index.ejs', { user : user, basket : basket });
 })
 
 app.get("/login", (req, res) => {

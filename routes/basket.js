@@ -45,6 +45,18 @@ module.exports = function(app){
   });
 
   // ajax basket
+  app.get('/_bnavbar', function(req, res) {
+    if (!req.session.user)
+    {
+      res.render('basket/loggedoutBasket.ejs');
+      return;
+    }
+
+    var basket = req.session.basket;
+    var user = req.session.user;
+    res.render('navbar/basketNavbar.ejs', {user : user, basket : basket});
+  });
+
   app.put('/_basket', function(req, res) {
 
     (async function handle(){

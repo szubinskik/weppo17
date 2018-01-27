@@ -28,11 +28,10 @@ function basket_add(id)
     req.open('put', `/_basket?id=${id}`, true);
     req.onreadystatechange = function()
     {
-        // implement refreshing basket here
-        /*if ( req.readyState == XMLHttpRequest.DONE )
+        if ( req.readyState == XMLHttpRequest.DONE )
         {
-             clist.innerHTML = req.responseText;
-        }*/
+            update_basket();
+        }
     }
     req.send();
 }

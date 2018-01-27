@@ -1,0 +1,6 @@
+<ul class="list-group">
+    <% if (locals.items) {
+        for (item of items) { %>
+            <%- include('itemBasket.ejs', item); %>
+    <% } } %>
+</ul>

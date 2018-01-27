@@ -49,11 +49,13 @@
         <a class="navbar-brand" href="#">Nazwa sklepu</a>
         <div class="collapse navbar-collapse" id="navbarSupportedContent">
             <ul class="navbar-nav mr-auto"></ul>
-            <%- include("../navbar/basketNavbar.ejs", {return : true} ) %>
+            <div id="basket_navbar">
+                <%- include("../navbar/basketNavbar.ejs", {return : true}) %>
+            </div>
          </div>
     </nav>
 
-    <div class="container.float">
+    <div class="container">
 
         <%- include("listBasket.ejs"); %>
 
