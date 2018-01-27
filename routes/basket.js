@@ -6,56 +6,8 @@ module.exports = function(app){
 
   // basket view
   app.get('/basket', function(req, res) {
-    
-    /*
-    function _fetch_games()
-    {
-      var ids = [];
-      var games = [];
-      var Game = app.locals.Game;
-
-      for (var id in basket.items)
-      {
-        var nid = parseInt(id);
-        if (isNaN(nid))
-          continue;
-
-          ids.push(nid);
-      }
-
-      if (ids.length == 0)
-      {
-        res.render('basket/emptyBasket.ejs');
-        return;
-      }
-
-      Game.findAll({
-        where : { id : ids }
-      
-      }).then(qres => {
-        for (var game of qres)
-        {
-          games.push({
-            id : game.id,
-            title : game.title,
-            price : game.price/100,
-            count : basket.items[game.id]
-          });
-        }
-        res.render('./basket.ejs', { items : games });
-      
-      }).catch(err => {
-        console.error(err);
-        return [00];
-      
-      });
-    };
-
-    _fetch_games();
-    */
 
     (async function handle(){
-
       if (!req.session.user)
       {
         res.render('basket/loggedoutBasket.ejs');
@@ -65,11 +17,29 @@ module.exports = function(app){
       var basket = req.session.basket;
       if (basket.items.length == 0)
       {
-        res.render('basket/basket.ejs', {items: []});
+        res.render('basket/basket.ejs', {
+          items: [],
+          user : req.session.user
+        });
         return;
       }
 
-      res.render("basket/basket.ejs", {items : basket.items});
+      items = [];
+
+      for (item of basket.items)
+      {
+        var db_item = await get_elem_by_id(item.id);
+        if (db_item)
+        {
+          db_item.count = item.count;
+          items.push(db_item);
+        }
+      }
+
+      res.render("basket/basket.ejs", {
+        items : items,
+        user : req.session.user
+      });
     })();
 
   });
@@ -78,8 +48,31 @@ module.exports = function(app){
   app.put('/_basket', function(req, res) {
 
     (async function handle(){
+      if (!req.session.user)
+      {
+        res.render('basket/loggedoutBasket.ejs');
+        return;
+      }
+      var basket = req.session.basket;
+
       var elem = await get_elem_by_id(req.query.id);
-      res.render("basket/dberrBasket.ejs");
+      if (elem)
+      {
+        var set = false;
+        for (item of basket.items)
+        {
+          if (item.id == elem.id)
+          {
+            item.count++;
+            set = true;
+            break;
+          }
+        }
+        if (!set)
+          basket.items.push({id : elem.id, count : 1});
+        basket.price += elem.price/100;
+      }
+      res.end();
     })();
 
   });
@@ -117,29 +110,6 @@ module.exports = function(app){
     _verify_id(id, handler);
 
   });
-
-  // additional functions
-  // verify id and pass result (true - OK, flase - wrong) to handler
-  function _verify_id(id, handler)
-  {
-    var nid = parseInt(id);
-    if (isNaN(nid))
-        return handler(false, NaN);
-
-    Game.findAll({
-      where : { id : nid }
-      
-    }).then(ids => {
-      if(!ids || ids.length == 0)
-        return handler(false, NaN);
-      else
-        return handler(true, nid);
-      
-    }).catch(err => {
-      console.error(err);
-      return handler(false, NaN);
-    });
-  };
 
   async function get_elem_by_id(id)
   {

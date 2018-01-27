@@ -51,7 +51,8 @@ app.post("/login", async (req, res) => {
             // Tu jakieś dane do sesji
             req.session.user = user
             req.session.basket = {
-                items : []
+                items : [],
+                price : 0.0
               };
             res.redirect('/');
         }
