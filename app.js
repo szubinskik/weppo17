@@ -50,6 +50,9 @@ app.post("/login", async (req, res) => {
             res.setHeader("Content-type", "text/html; charset=utf-8")
             // Tu jakieś dane do sesji
             req.session.user = user
+            req.session.basket = {
+                items : []
+              };
             res.redirect('/');
         }
         else {

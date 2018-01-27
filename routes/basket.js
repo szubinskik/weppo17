@@ -1,8 +1,13 @@
 module.exports = function(app){
+  const Game = app.locals.Game
+  const User = app.locals.User
+  const Order = app.locals.Order
+  const Op = app.locals.Op
 
   // basket view
   app.get('/basket', function(req, res) {
     
+    /*
     function _fetch_games()
     {
       var ids = [];
@@ -46,55 +51,36 @@ module.exports = function(app){
       });
     };
 
-    if (false)
-    //if (!req.session.user)
-    {
-      res.render('basket/loggedoutBasket.ejs');
-      return;
-    }
-
-    if (!req.session.basket)
-      req.session.basket = _basket_session();
-
-    var basket = req.session.basket;
-    if (basket.items.length == 0)
-    {
-      res.render('basket/emptyBasket.ejs');
-      return;
-    }
-
     _fetch_games();
-  });
+    */
 
-  // ajax basket
-  app.put('/_basket', function(req, res) {
-    
-    function handler(is_valid, nid)
-    {
-      if (!is_valid)
-        res.end("1");
-      
-      if (false)
-      //if (!req.session.user)
+    (async function handle(){
+
+      if (!req.session.user)
       {
         res.render('basket/loggedoutBasket.ejs');
         return;
       }
-
-      if (!req.session.basket)
-        req.session.basket = _basket_session(); 
-      var basket = req.session.basket;
-
-      if (basket.items[nid])
-        basket.items[nid]++;
-      else
-        basket.items[nid] = 1;
       
-      res.end('0');
-    };
+      var basket = req.session.basket;
+      if (basket.items.length == 0)
+      {
+        res.render('basket/basket.ejs', {items: []});
+        return;
+      }
 
-    var id = req.query.id;
-    _verify_id(id, handler);
+      res.render("basket/basket.ejs", {items : basket.items});
+    })();
+
+  });
+
+  // ajax basket
+  app.put('/_basket', function(req, res) {
+
+    (async function handle(){
+      var elem = await get_elem_by_id(req.query.id);
+      res.render("basket/dberrBasket.ejs");
+    })();
 
   });
 
@@ -136,7 +122,6 @@ module.exports = function(app){
   // verify id and pass result (true - OK, flase - wrong) to handler
   function _verify_id(id, handler)
   {
-    var Game = app.locals.Game;
     var nid = parseInt(id);
     if (isNaN(nid))
         return handler(false, NaN);
@@ -156,12 +141,23 @@ module.exports = function(app){
     });
   };
 
-  function _basket_session()
+  async function get_elem_by_id(id)
   {
-    return {
-      items : {}
+    id = parseInt(id);
+
+    if (isNaN(id))
+      return null;
+      
+    let ids;
+    try
+    {
+      ids = await Game.findAll({where : { id : id }});
+      return ids[0];
+    }
+    catch (e)
+    {
+        return null;
     }
   }
-
 }
 

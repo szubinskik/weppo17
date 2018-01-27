@@ -21,3 +21,18 @@ function refresh_games(phrase)
     }
     req.send();
 }
+
+function basket_add(id)
+{
+    var req = new XMLHttpRequest();
+    req.open('put', `/_basket?id=${id}`, true);
+    req.onreadystatechange = function()
+    {
+        // implement refreshing basket here
+        /*if ( req.readyState == XMLHttpRequest.DONE )
+        {
+             clist.innerHTML = req.responseText;
+        }*/
+    }
+    req.send();
+}

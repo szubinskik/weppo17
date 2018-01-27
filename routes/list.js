@@ -30,7 +30,12 @@ module.exports = function(app){
                     price : game.price / 100,
                     description : game.description
                 });
-            res.render("list/columnList.ejs", {games : data});
+
+            var user = req.session.user||null;
+            res.render("list/columnList.ejs", {
+                games : data,
+                user : user,
+            });
         })
         .catch(err => {
             console.error(err);
