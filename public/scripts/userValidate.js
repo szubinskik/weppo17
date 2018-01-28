@@ -7,6 +7,7 @@ window.addEventListener("load", event => {
 
     var nameOutput = document.getElementById("nameMes")
     var passOutput = document.getElementById("passMes")
+    var rePassOutput = document.getElementById("rePassMes")
 
     // username validation (asychronous)
     function nameCheck(handler) {
@@ -57,7 +58,7 @@ window.addEventListener("load", event => {
             return true
         }
         else {
-            document.getElementById("passMes").innerHTML = "Hasło musi mieć co najmniej 6 znaków"
+            passOutput.innerHTML = "Hasło musi mieć co najmniej 6 znaków"
             return false
         }
     }
@@ -68,11 +69,11 @@ window.addEventListener("load", event => {
         var rePassword = rePassInput.value
 
         if(password == rePassword) {
-            document.getElementById("rePassMes").innerHTML = ""
+            rePassOutput.innerHTML = ""
             return true
         }
         else {
-            document.getElementById("rePassMes").innerHTML = "Hasła nie są identyczne"
+            rePassOutput.innerHTML = "Hasła nie są identyczne"
             return false 
         }
     }
