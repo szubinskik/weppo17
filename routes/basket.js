@@ -51,6 +51,7 @@ module.exports = function(app){
 
       res.render("basket/listBasket.ejs", {
         items : items,
+        price : basket.price,
         user : req.session.user
       });
     })();
@@ -120,7 +121,19 @@ module.exports = function(app){
       }
       res.end();
     })();
+  });
 
+  app.delete('/_rbasket', function(req, res) {
+    if (!req.session.user)
+    {
+      res.render('basket/loggedoutBasket.ejs');
+      return;
+    }
+
+    var basket = req.session.basket;
+    basket.items = [];
+    basket.price = 0;
+    res.end();
   });
 
   async function get_elem_by_id(id)

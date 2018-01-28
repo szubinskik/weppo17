@@ -1,4 +1,15 @@
 <ul class="list-group">
+    <li class="list-group-item list-group-item-secondary d-flex justify-content-between align-items-center">
+        <h3 class="mr-auto p-2 align-self-center">Suma:</h3>
+        <% if(!locals.price) locals.price = 0 %>
+        <span class="badge badge-primary p-2"><%= Math.abs(locals.price).toFixed(2) %> PLN</span>
+        <span class="p-1"> </span>
+        <button type="button" class="btn p-2" onclick="basket_remove_all()">
+            <svg-icon class="basket-icon"><src href="sprite/sprite.svg#si-glyph-basket-error" /></svg-icon>
+        </button>
+        <span class="p-1"> </span>
+        <button type="button" class="btn btn-success p-2">Zamawiam</button>
+    </li>
     <% if (locals.items) {
         for (item of items) { %>
             <%- include('itemBasket.ejs', item); %>

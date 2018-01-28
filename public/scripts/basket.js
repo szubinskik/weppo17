@@ -28,6 +28,20 @@ function basket_remove(id)
     req.send();
 }
 
+function basket_remove_all()
+{
+    var req = new XMLHttpRequest();
+    req.open('delete', `/_rbasket`, true);
+    req.onreadystatechange = function()
+    {
+        if ( req.readyState == XMLHttpRequest.DONE )
+        {
+            refresh_list();
+        }
+    }
+    req.send();
+}
+
 function refresh_list()
 {
     var clist = document.getElementById('basket_list');
