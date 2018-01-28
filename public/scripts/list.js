@@ -6,6 +6,22 @@ function f_search_submit()
     refresh_games(phrase);    
 }
 
+function get_game(id)
+{
+    var clist = document.getElementById('game_main');
+
+    var req = new XMLHttpRequest();
+    req.open('get', `/_game?id=${id}`, true);
+    req.onreadystatechange = function()
+    {
+        if ( req.readyState == XMLHttpRequest.DONE )
+        {
+             clist.innerHTML = req.responseText;
+        }
+    }
+    req.send();
+}
+
 function refresh_games(phrase)
 {
     var clist = document.getElementById('column_list');

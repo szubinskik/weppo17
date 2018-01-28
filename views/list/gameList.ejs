@@ -1,9 +1,9 @@
-<a href="#" class="list-group-item list-group-item-action flex-column align-items-start">
+<a href="#" class="list-group-item list-group-item-action flex-column align-items-start" onclick="get_game(<%= game.id %>)">
     <div class="d-flex w-100">
         <h5 class="mr-auto p-2 align-self-center"><%= game.title %></h5>
         <small class="p-2 align-self-center"><%= game.price.toFixed(2);%> PLN</small>
         <% if (locals.user) { %>
-        <button type="button" class="p-2 align-self-center btn btn-link" onclick="basket_add(<%= game.id %>)">
+        <button type="button" class="p-2 align-self-center btn btn-link" onclick="event.stopPropagation(); basket_add(<%= game.id %>);">
             <svg-icon class="game-icon"><src href="sprite/sprite.svg#si-glyph-basket-plus" /></svg-icon>
         </button>
         <% } %>

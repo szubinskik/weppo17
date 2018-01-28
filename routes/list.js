@@ -44,5 +44,37 @@ module.exports = function(app){
 
     });
 
+    app.get('/_game', function(req, res) {
+        
+        (async function handle(){
+            var game = await get_elem_by_id(req.query.id);
+            if (!game)
+            {
+                res.end("");
+                return;
+            }
+
+            res.render("list/mainList.ejs", {game : game} );
+        })();
+    });
+
+    async function get_elem_by_id(id)
+    {
+      id = parseInt(id);
+  
+      if (isNaN(id))
+        return null;
+        
+      let ids;
+      try
+      {
+        ids = await Game.findAll({where : { id : id }});
+        return ids[0];
+      }
+      catch (e)
+      {
+          return null;
+      }
+    }
 }
 
