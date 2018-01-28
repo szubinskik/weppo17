@@ -2,29 +2,36 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <script src="/scripts/userValidate.js"></script>
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <title>Rejestracja</title>
+    <script src="/scripts/userValidate.js"></script>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
 </head>
 <body>
-    <form method="POST" id="userForm">
-        <table>
-            <tr>
-                <td align="right">Login: </td>
-                <td><input type="text" name="username" id="username" maxlength="30"></td>
-                <td id="nameMes"></td>
-            </tr>
-            <tr>
-                <td align="right">Hasło: </td>
-                <td><input type="password" name="password" id="password"></td>
-                <td id="passMes"></td>
-            </tr>
-            <tr>
-                <td align="right">Powtórz hasło: </td>
-                <td><input type="password" id="rePassword"></td>
-                <td id="rePassMes"></td>
-            </tr>
-        </table>
-        <button type="submit">Utwórz konto</button>
-    </form>
+    <div class="container">
+        <div style="margin-top: 12%" class="border rounded">
+        <form style="margin: 10px" method="POST" id="userForm">
+            <div class="form-group">
+                <label for="username">Nazwa użytkownika</label>
+                <input type="text" class="form-control" name="username" id="username" maxlength="30" placeholder="Wprowadź login" autofocus>
+                <small  class="form-text text-muted" id="nameMes"></small>
+            </div>
+            <div class="form-group">
+                <label for="password">Hasło</label>
+                <input type="password" class="form-control" name="password" id="password" placeholder="Hasło">
+                <small  class="form-text text-muted" id="passMes"></small>
+            </div>
+            <div class="form-group">
+                <label for="rePassword">Powtórz hasło</label>
+                <input type="password" class="form-control" name="rePassword" id="rePassword" placeholder="Hasło">
+                <small  class="form-text text-muted" id="rePassMes"></small>
+            </div>
+            <button type="submit" class="btn btn-primary">Zarejestruj</button>
+        </form>
+        </div>
+        <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+    </div>
 </body>
 </html>
