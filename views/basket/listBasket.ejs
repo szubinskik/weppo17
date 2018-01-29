@@ -8,10 +8,17 @@
             <svg-icon class="basket-icon"><src href="sprite/sprite.svg#si-glyph-basket-error" /></svg-icon>
         </button>
         <span class="p-1"> </span>
-        <button type="button" class="btn btn-success p-2">Zamawiam</button>
+        <button type="button" class="btn btn-success p-2" 
+            data-toggle="collapse" data-target="#orderToggle"
+            aria-expanded="false" aria-controls="orderToggle"
+            <% if(!locals.price || Math.abs(locals.price) < 0.01 ){ %> disabled <% } %> >Zamawiam</button>
     </li>
     <% if (locals.items) {
         for (item of items) { %>
             <%- include('itemBasket.ejs', item); %>
     <% } } %>
 </ul>
+
+<div class="collapse" id="orderToggle">
+    <%- include("orderBasket.ejs") %>
+</div>
