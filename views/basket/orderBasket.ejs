@@ -1,3 +1,5 @@
-<form>
-  <h1>Miejsce na formularz zamówienia</h1>
+<form method="POST" action="/sendOrder">
+  <h1>Miejsce na płatności</h1>
+  <input type="hidden" name="_csrf" value="<%= locals.csrfToken %>">
+  <button type="submit" class="btn btn-primary">Płacę</button>
 </form>

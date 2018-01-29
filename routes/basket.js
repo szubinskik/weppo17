@@ -30,7 +30,7 @@ module.exports = function(app){
     res.render('navbar/basketNavbar.ejs', {user : user, basket : basket});
   });
 
-  app.get('/_blist', function(req, res) {
+  app.get('/_blist', csrfProtection, function(req, res) {
     (async function handle(){
       if (!req.session.user)
       {
@@ -54,7 +54,8 @@ module.exports = function(app){
       res.render("basket/listBasket.ejs", {
         items : items,
         price : basket.price,
-        user : req.session.user
+        user : req.session.user,
+        csrfToken : req.csrfToken()
       });
     })();
   });

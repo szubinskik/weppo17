@@ -44,10 +44,10 @@ app.get('/list', (req, res) => {
     res.redirect('/');
 })
 
-app.get('/sendOrder', async (req, res) => {
+app.post('/sendOrder', csrfProtection, async (req, res) => {
     if(req.session.user) {
         try {
-            var games = req.session.basket;
+            var games = req.session.basket.items;
             var order = await Order.create()
 
             var user = await User.findOne({
