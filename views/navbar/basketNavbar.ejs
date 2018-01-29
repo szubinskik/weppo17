@@ -1,7 +1,7 @@
 <form class="form-inline my-2 my-lg-0">
 <% if (locals.basket) { %>
     <label style="margin-right: 5px">
-        <span class="badge badge-info"><%= locals.basket.price.toFixed(2);%> PLN</span>
+        <span class="badge badge-info"><%= Math.abs(locals.basket.price).toFixed(2);%> PLN</span>
     </label>
     <a href="basket">
         <button type="button" class="btn btn-light">
