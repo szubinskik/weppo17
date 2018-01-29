@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+    <meta charset="UTF-8">
+    <title>Zarządzanie grami</title>
+</head>
+<body>
+    <form method="GET" action="/gameAdmin">
+        Szukaj gry: 
+        <input type="text" name="name" maxlength="30" value="<%= query %>">
+        <button type="submit">Szukaj</button>
+    </form>
+    <a href="/add">Dodaj nową grę</a>
+    <% for(game of games) { %>
+        <%- include("gameAdminView.ejs", { game: game }) %>
+    <% } %>
+</body>
+</html>
