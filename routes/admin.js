@@ -20,6 +20,29 @@ module.exports = function(app) {
         res.render("admin/admin.ejs")
     })
 
+    app.get("/gameAdmin", authorizeAdmin, (req, res) => {
+        var query = req.query.name || ""
+        Game.findAll({
+            where: {
+                title: { [Op.iLike]: `%${query}%` }
+            }
+        })
+        .then(games => {
+            res.render("admin/gameAdmin.ejs", {
+                games: games,
+                query: query
+            })
+        })
+        .catch(err => {
+            console.error(err)
+            res.setHeader("Content-type", "text/html; charset=utf-8")
+            res.end(
+                "Wystąpił błąd<br>\
+                <a href = '/admin'>Wróć do panelu administratora</a>"
+            )
+        })
+    })
+
     app.get("/add", authorizeAdmin, csrfProtection, (req, res) => {
         res.render("admin/add.ejs", { csrfToken: req.csrfToken() })
     })
@@ -34,7 +57,7 @@ module.exports = function(app) {
                 Jej id to: ${game.id}<br>
                 <a href = '/admin'>Wróc do panelu administratora</a><br>
                 <a href = '/add'>Dodaj kolejną grę</a><br>
-                <a href = '/list'>Przejdź do listy gier</a>`
+                <a href = '/gameAdmin'>Przejdź do listy gier</a>`
             )
         })
         .catch(err => {
@@ -43,7 +66,7 @@ module.exports = function(app) {
             res.end(
                 "Wystąpił błąd<br>\
                 <a href = '/add'>Wróc do panelu dodawania gier</a><br>\
-                <a href = '/admin'>Przejdź do panelu administratora</a>"
+                <a href = '/gameAdmin'>Przejdź do listy gier</a>"
             )
         })
     })
@@ -59,13 +82,13 @@ module.exports = function(app) {
             }
             else {
                 res.setHeader("Content-type", "text/html; charset=utf-8")
-                res.end("Nie można odnaleźć żądanej gry<br><a href='/list'>Wróć do listy gier</a>")
+                res.end("Nie można odnaleźć żądanej gry<br><a href='/gameAdmin'>Wróć do listy gier</a>")
             }
         })
         .catch(err => {
             console.error(err)
             res.setHeader("Content-type", "text/html; charset=utf-8")
-            res.end("Wystąpił błąd<br><a href='/list'>Wróć do listy gier</a>")
+            res.end("Wystąpił błąd<br><a href='/gameAdmin'>Wróć do listy gier</a>")
         })
     })
     
@@ -78,17 +101,17 @@ module.exports = function(app) {
                 req.body.price = req.body.price.replace(",", ".") * 100
                 game.update(req.body)
                 res.setHeader("Content-type", "text/html; charset=utf-8")
-                res.end("Pomyślnie zmieniono dane gry<br><a href='/list'>Wróć do listy gier</a>")
+                res.end("Pomyślnie zmieniono dane gry<br><a href='/gameAdmin'>Wróć do listy gier</a>")
             }
             else {
                 res.setHeader("Content-type", "text/html; charset=utf-8")
-                res.end("Nie można odnaleźć żądanej gry<br><a href='/list'>Wróć do listy gier</a>")
+                res.end("Nie można odnaleźć żądanej gry<br><a href='/gameAdmin'>Wróć do listy gier</a>")
             }
         })
         .catch(err => {
             console.error(err)
             res.setHeader("Content-type", "text/html; charset=utf-8")
-            res.end("Wystąpił błąd<br><a href='/list'>Wróć do listy gier</a>")
+            res.end("Wystąpił błąd<br><a href='/gameAdmin'>Wróć do listy gier</a>")
         })
     })
     
@@ -103,13 +126,13 @@ module.exports = function(app) {
             }
             else {
                 res.setHeader("Content-type", "text/html; charset=utf-8")
-                res.end("Nie można odnaleźć żądanej gry<br><a href='/list'>Wróć do listy gier</a>")
+                res.end("Nie można odnaleźć żądanej gry<br><a href='/gameAdmin'>Wróć do listy gier</a>")
             }
         })
         .catch(err => {
             console.error(err)
             res.setHeader("Content-type", "text/html; charset=utf-8")
-            res.end("Wystąpił błąd<br><a href='/list'>Wróć do listy gier</a>")
+            res.end("Wystąpił błąd<br><a href='/gameAdmin'>Wróć do listy gier</a>")
         })
     })
     
@@ -120,17 +143,17 @@ module.exports = function(app) {
         .then(count => {
             if(count > 0) {
                 res.setHeader("Content-type", "text/html; charset=utf-8")
-                res.end("Pomyślnie usunięto grę<br><a href='/list'>Wróć do listy gier</a>")
+                res.end("Pomyślnie usunięto grę<br><a href='/gameAdmin'>Wróć do listy gier</a>")
             }
             else {
                 res.setHeader("Content-type", "text/html; charset=utf-8")
-                res.end("Nie można odnaleźć żądanej gry<br><a href='/list'>Wróć do listy gier</a>")
+                res.end("Nie można odnaleźć żądanej gry<br><a href='/gameAdmin'>Wróć do listy gier</a>")
             }
         })
         .catch(err => {
             console.error(err)
             res.setHeader("Content-type", "text/html; charset=utf-8")
-            res.end("Wystąpił błąd<br><a href='/list'>Wróć do listy gier</a>")
+            res.end("Wystąpił błąd<br><a href='/gameAdmin'>Wróć do listy gier</a>")
         })
     })
 
@@ -150,7 +173,7 @@ module.exports = function(app) {
         .catch(err => {
             console.error(err)
             res.setHeader("Content-type", "text/html; charset=utf-8")
-            res.end("Wystąpił błąd")
+            res.end("Wystąpił błąd<br><a href='/admin'>Wróć do panelu administratora</a>")
         })
     })
 
@@ -173,7 +196,7 @@ module.exports = function(app) {
         .catch(err => {
             console.error(err)
             res.setHeader("Content-type", "text/html; charset=utf-8")
-            res.end("Wystąpił błąd")
+            res.end("Wystąpił błąd<br><a href='/admin'>Wróć do panelu administratora</a>")
         })
     })
 }
