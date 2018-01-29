@@ -42,4 +42,39 @@ app.get('/list', (req, res) => {
     res.redirect('/');
 })
 
+app.get('/sendOrder', async (req, res) => {
+    var games = [
+        { id: 1, count: 3}, {id: 2, count: 5}
+    ]
+
+    if(req.session.user) {
+        try {
+            var order = await Order.create()
+
+            var user = await User.findOne({
+                where: { id: req.session.user.id }
+            })
+
+            order.setUser(user)
+    
+            for(gameData of games) {
+                var game = await Game.findOne({
+                    where: { id: gameData.id }
+                })
+    
+                order.addGame(game, { through: { count: gameData.count }})
+            }
+    
+            res.end("Ok")
+        }
+        catch(err) {
+            console.log(err)
+            res.end("Error")
+        }
+    }
+    else {
+        res.render("user/notLoggedIn.ejs")
+    }
+})
+
 http.createServer(app).listen(3000)
