@@ -13,6 +13,10 @@
         <td align="right" valign="top">Opis: </td>
         <td><textarea name="description" cols="30" rows="5"><%= game.description %></textarea></td>
     </tr>
+    <tr>
+        <td align="right" valign="top">Obrazki: </td>
+        <td><textarea name="images" cols="30" rows="5"><%= game.images %></textarea></td>
+    </tr>
 </table>
 <input type="hidden" name="_csrf" value="<%= csrfToken %>">
 <button type="submit">Zatwierdź</button>

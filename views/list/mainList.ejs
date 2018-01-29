@@ -1,2 +1,29 @@
 <h1 class="display-3"><%= locals.game.title %></h1>
 <p><%= locals.game.description %></p>
+<% if(locals.images){ %>
+    <div id="carouselExampleIndicators" class="carousel slide" data-ride="carousel">
+      <ol class="carousel-indicators">
+        <% for(var i = 0; i < locals.images.length; ++i) { %>
+        <li data-target="#carouselExampleIndicators" data-slide-to="<%= i %>" <% if( i == 0) { %> class="active"> <% } %> </li>
+        <% } %>
+      </ol>
+      <div class="carousel-inner">
+        <% for([index, elem] of locals.images.entries()) { %>
+        <div class="carousel-item <% if( index == 0) { %> active <% } %>">
+            <img class="d-block w-100" src="<%= elem %>" alt="">
+        </div>
+        <% } %>
+      </div>
+      <a class="carousel-control-prev" href="#carouselExampleIndicators" role="button" data-slide="prev">
+        <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+        <span class="sr-only">Previous</span>
+      </a>
+      <a class="carousel-control-next" href="#carouselExampleIndicators" role="button" data-slide="next">
+        <span class="carousel-control-next-icon" aria-hidden="true"></span>
+        <span class="sr-only">Next</span>
+      </a>
+    </div>
+<% } %>
+<% for(elem of locals.images) {%>
+    <h1><%= elem %></h1>
+<% } %>

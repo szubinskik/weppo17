@@ -28,7 +28,7 @@ module.exports = function(app){
                     id : game.id,
                     title : game.title,
                     price : game.price / 100,
-                    description : game.description
+                    description : game.description,
                 });
 
             var user = req.session.user||null;
@@ -54,7 +54,7 @@ module.exports = function(app){
                 return;
             }
 
-            res.render("list/mainList.ejs", {game : game} );
+            res.render("list/mainList.ejs", {game : game, images : get_file_list(game.images)} );
         })();
     });
 
@@ -75,6 +75,14 @@ module.exports = function(app){
       {
           return null;
       }
+    }
+
+    function get_file_list(text)
+    {
+        if(!text)
+            return [];
+
+        return text.split(";");
     }
 }
 

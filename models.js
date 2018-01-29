@@ -21,7 +21,8 @@ const Game = sequelize.define("games", {
         type: Sequelize.INTEGER,
         allowNull: false
     },
-    description: Sequelize.TEXT
+    description: Sequelize.TEXT,
+    images: Sequelize.TEXT
 })
 
 const User = sequelize.define("users", {
