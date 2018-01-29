@@ -10,16 +10,23 @@ module.exports = function(app){
     // ajax basket
     app.get('/_list', csrfProtection, function(req, res) {
     
-        var data = [];
-        var title = req.query.title||"";
-        var Game = app.locals.Game;
-        Game.findAll({
-            where : {
-                title : {
-                    [Op.iRegexp]: `.?${title}.?`
-                }
+        (async function handle(){
+            var data = [];
+            var title = req.query.title||"";
+            var Game = app.locals.Game;
+            let games;
+            try
+            {
+                games = await Game.findAll({
+                    where : {
+                        title : {
+                            [Op.iRegexp]: `.?${title}.?`
+                        }
+                    }});
+            } catch(err) {
+                console.error(err);
+                res.end("Error");
             }
-        }).then(games => {
             if(!games)
             {
                 res.setHeader("Content-type", "text/html; charset=utf-8");
@@ -38,11 +45,7 @@ module.exports = function(app){
                 games : data,
                 user : user,
             });
-        })
-        .catch(err => {
-            console.error(err);
-            res.end("Error");
-        })
+        })();
 
     });
 
