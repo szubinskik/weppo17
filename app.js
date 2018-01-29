@@ -63,8 +63,12 @@ app.post('/sendOrder', csrfProtection, async (req, res) => {
     
                 order.addGame(game, { through: { count: gameData.count }})
             }
-    
-            res.end("Ok")
+            
+            req.session.basket = {
+                items : [],
+                price : 0
+            }
+            res.redirect("/basket");
         }
         catch(err) {
             console.log(err)
