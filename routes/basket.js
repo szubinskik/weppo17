@@ -4,15 +4,17 @@ module.exports = function(app){
   const Order = app.locals.Order
   const Op = app.locals.Op
 
+  const csrfProtection = app.locals.csrfProtection
+
   // basket view
-  app.get('/basket', function(req, res) {
+  app.get('/basket', csrfProtection, function(req, res) {
     if (!req.session.user)
     {
       res.render('basket/loggedoutBasket.ejs');
       return;
     }
   
-    res.render("basket/basket.ejs", { user : req.session.user });
+    res.render("basket/basket.ejs", { user : req.session.user, csrfToken : req.csrfToken() });
   });
 
   // ajax basket
@@ -57,7 +59,7 @@ module.exports = function(app){
     })();
   });
 
-  app.put('/_basket', function(req, res) {
+  app.put('/_basket', csrfProtection, function(req, res) {
 
     (async function handle(){
       if (!req.session.user)
@@ -89,7 +91,7 @@ module.exports = function(app){
 
   });
 
-  app.delete('/_basket', function(req, res) {
+  app.delete('/_basket', csrfProtection, function(req, res) {
     
     (async function handle(){
       if (!req.session.user)

@@ -16,6 +16,8 @@ app.use(express.urlencoded({ extended: true }))
 app.use(express.static("public"))
 app.locals.csrfProtection = csurf()
 
+const csrfProtection = app.locals.csrfProtection
+
 // sesja wygasa po 10 minutach
 app.use(session({
     secret: 'keyboard cat',
@@ -32,10 +34,10 @@ app.locals.Op = Op
 
 require('./routes')(app);
 
-app.get('/', (req, res) => {
+app.get('/', csrfProtection, (req, res) => {
     var user = req.session.user||null;
     var basket = req.session.basket||null;
-    res.render('index.ejs', { user : user, basket : basket });
+    res.render('index.ejs', { user : user, basket : basket, csrfToken : req.csrfToken()});
 })
 
 app.get('/list', (req, res) => {
@@ -43,12 +45,9 @@ app.get('/list', (req, res) => {
 })
 
 app.get('/sendOrder', async (req, res) => {
-    var games = [
-        { id: 1, count: 3}, {id: 2, count: 5}
-    ]
-
     if(req.session.user) {
         try {
+            var games = req.session.basket;
             var order = await Order.create()
 
             var user = await User.findOne({

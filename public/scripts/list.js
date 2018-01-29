@@ -32,7 +32,7 @@ function refresh_games(phrase)
     {
         if ( req.readyState == XMLHttpRequest.DONE )
         {
-             clist.innerHTML = req.responseText;
+            clist.innerHTML = req.responseText;
         }
     }
     req.send();
@@ -42,6 +42,7 @@ function basket_add(id)
 {
     var req = new XMLHttpRequest();
     req.open('put', `/_basket?id=${id}`, true);
+    req.setRequestHeader("X-CSRF-Token", _csrftoken);
     req.onreadystatechange = function()
     {
         if ( req.readyState == XMLHttpRequest.DONE )

@@ -4,6 +4,7 @@ function basket_add(id)
 {
     var req = new XMLHttpRequest();
     req.open('put', `/_basket?id=${id}`, true);
+    req.setRequestHeader("X-CSRF-Token", _csrftoken);
     req.onreadystatechange = function()
     {
         if ( req.readyState == XMLHttpRequest.DONE )
@@ -18,6 +19,7 @@ function basket_remove(id)
 {
     var req = new XMLHttpRequest();
     req.open('delete', `/_basket?id=${id}`, true);
+    req.setRequestHeader("X-CSRF-Token", _csrftoken);
     req.onreadystatechange = function()
     {
         if ( req.readyState == XMLHttpRequest.DONE )
@@ -32,6 +34,7 @@ function basket_remove_all()
 {
     var req = new XMLHttpRequest();
     req.open('delete', `/_rbasket`, true);
+    req.setRequestHeader("X-CSRF-Token", _csrftoken);
     req.onreadystatechange = function()
     {
         if ( req.readyState == XMLHttpRequest.DONE )

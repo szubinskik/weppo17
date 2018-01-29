@@ -5,8 +5,10 @@ module.exports = function(app){
     const Order = app.locals.Order
     const Op = app.locals.Op
   
+    const csrfProtection = app.locals.csrfProtection
+
     // ajax basket
-    app.get('/_list', function(req, res) {
+    app.get('/_list', csrfProtection, function(req, res) {
     
         var data = [];
         var title = req.query.title||"";

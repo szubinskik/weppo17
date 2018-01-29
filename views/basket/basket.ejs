@@ -61,12 +61,12 @@
     </nav>
 
     <div class="container">
-
-        <div id="basket_list">
-            <%- include("listBasket.ejs") %>
-        </div>
-
+        <div id="basket_list"></div>
     </div>
+
+    <script>
+        _csrftoken = '<%= csrfToken %>'
+    </script>
 
     <script src="scripts/basket.js"></script>
     <!-- Bootstrap scripts -->
