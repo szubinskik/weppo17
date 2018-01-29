@@ -69,6 +69,19 @@ module.exports = function(app) {
         }
     })
     
+    app.get("/logout", (req, res) => {
+        var err = false;
+        if (req.session.basket)
+            delete req.session.basket;
+
+        if (req.session.user)
+            delete req.session.user;
+        else
+            err = true;
+
+        res.render("user/logout.ejs", { err : err });
+    })
+
     app.get("/register", (req, res) => {
         res.render("user/register.ejs")
     })
