@@ -8,5 +8,11 @@
         </button>
         <% } %>
     </div>
-    <p class="mb-1"><%= game.description %></p>
+    <p class="mb-1">
+    <% if (game.description.length <= 50) { %>
+        <%= game.description %>
+    <% } else { %>
+        <%= game.description.slice(0, 47) + "..." %>
+    <% } %>
+    </p>
 </a>
