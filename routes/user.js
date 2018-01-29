@@ -31,11 +31,20 @@ module.exports = function(app) {
 
     app.locals.authorize = authorize
 
-    app.get("/login", (req, res) => {
+    function checkLogin(req, res, next) {
+        if(req.session.user) {
+            res.redirect("/")
+        }
+        else {
+            next()
+        }
+    }
+
+    app.get("/login", checkLogin, (req, res) => {
         res.render("user/login.ejs", { wrong: false })
     })
     
-    app.post("/login", async (req, res) => {
+    app.post("/login", checkLogin, async (req, res) => {
         try {
             var user = await User.findOne({
                 where: { username: req.body.username }
