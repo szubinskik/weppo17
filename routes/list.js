@@ -20,7 +20,7 @@ module.exports = function(app){
                 games = await Game.findAll({
                     where : {
                         title : {
-                            [Op.iRegexp]: `.?${title}.?`
+                            [Op.iLike]: `%${title}%`
                         }
                     }});
             } catch(err) {
