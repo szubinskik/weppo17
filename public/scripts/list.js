@@ -1,9 +1,10 @@
-window.addEventListener('load', refresh_games(''));
+window.addEventListener('load', refresh_games('', ''));
 
 function f_search_submit()
 {
-    var phrase = document.getElementById('t_search').value;
-    refresh_games(phrase);    
+    var title = document.getElementById('t_title').value;
+    var description = document.getElementById('t_description').value;
+    refresh_games(title, description);    
 }
 
 function get_game(id)
@@ -22,12 +23,12 @@ function get_game(id)
     req.send();
 }
 
-function refresh_games(phrase)
+function refresh_games(title, description)
 {
     var clist = document.getElementById('column_list');
 
     var req = new XMLHttpRequest();
-    req.open('get', `/_list?title=${phrase}`, true);
+    req.open('get', `/_list?title=${title}&description=${description}`, true);
     req.onreadystatechange = function()
     {
         if ( req.readyState == XMLHttpRequest.DONE )

@@ -13,6 +13,7 @@ module.exports = function(app){
         (async function handle(){
             var data = [];
             var title = req.query.title||"";
+            var description = req.query.description||"";
             var Game = app.locals.Game;
             let games;
             try
@@ -21,6 +22,9 @@ module.exports = function(app){
                     where : {
                         title : {
                             [Op.iLike]: `%${title}%`
+                        },
+                        description : {
+                            [Op.iLike]: `%${description}%`
                         }
                     }});
             } catch(err) {
