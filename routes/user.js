@@ -94,7 +94,7 @@ module.exports = function(app) {
                 password: hash
             })
             res.setHeader("Content-type", "text/html; charset=utf-8")
-            res.end("Pomyślnie zarejestrowano. <a href='/login'>Zaloguj się</a>")
+            res.render('user/registered.ejs')
         }
         catch(err) {
             console.error(err)
