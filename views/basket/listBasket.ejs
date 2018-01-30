@@ -5,7 +5,7 @@
         <span class="badge badge-primary p-2"><%= Math.abs(locals.price).toFixed(2) %> PLN</span>
         <span class="p-1"> </span>
         <button type="button" class="btn p-2" onclick="basket_remove_all()" <% if(!locals.price || Math.abs(locals.price) < 0.01 ){ %> disabled <% } %>>
-            <svg-icon class="basket-icon"><src href="sprite/sprite.svg#si-glyph-basket-error" /></svg-icon>
+            <svg-icon class="basket-icon"><src href="svg/si-glyph-basket-error.svg" /></svg-icon>
         </button>
         <span class="p-1"> </span>
         <button type="button" class="btn btn-success p-2" 
