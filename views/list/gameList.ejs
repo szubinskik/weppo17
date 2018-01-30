@@ -4,7 +4,7 @@
         <small class="p-2 align-self-center"><%= game.price.toFixed(2);%> PLN</small>
         <% if (locals.user) { %>
         <button type="button" class="p-2 align-self-center btn btn-link" onclick="event.stopPropagation(); basket_add(<%= game.id %>);">
-            <svg-icon class="game-icon"><src href="sprite/sprite.svg#si-glyph-basket-plus" /></svg-icon>
+            <svg-icon class="game-icon"><src href="svg/si-glyph-basket-plus.svg" /></svg-icon>
         </button>
         <% } %>
     </div>

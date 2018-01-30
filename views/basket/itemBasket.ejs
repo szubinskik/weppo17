@@ -2,10 +2,10 @@
     <h3 class="mr-auto p-2"><%= item.title %></h3>
     <span class="badge badge-danger badge-pill p-2"><%= item.count %></span>
     <button type="button" class="p-2 align-self-center btn btn-link" onclick="basket_add(<%= item.id %>)">
-            <svg-icon class="game-icon"><src href="sprite/sprite.svg#si-glyph-basket-plus" /></svg-icon>
+            <svg-icon class="game-icon"><src href="svg/si-glyph-basket-plus.svg" /></svg-icon>
     </button>
     <button type="button" class="p-2 align-self-center btn btn-link" onclick="basket_remove(<%= item.id %>)">
-            <svg-icon class="game-icon"><src href="sprite/sprite.svg#si-glyph-basket-remove" /></svg-icon>
+            <svg-icon class="game-icon"><src href="svg/si-glyph-basket-remove.svg" /></svg-icon>
     </button>
     <span class="p-2"><%= (item.count*item.price/100).toFixed(2) %> PLN</span>
 </li>
